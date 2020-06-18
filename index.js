@@ -8,6 +8,7 @@ module.exports = function GatheringMarkers(mod) {
     markenabled = true,
     messager = false,
     alerts = false,
+	notices = true,
     Item_ID = 98260,
     whiteList = [],
     markList = [],
@@ -32,7 +33,14 @@ module.exports = function GatheringMarkers(mod) {
         if (alerts) notice('Found ' + event.id)
         
         if (messager) mod.command.message('Found ' + event.id)
-            
+        
+        if (notices) {
+			mod.send('S_CHAT', 3, {
+				channel: 21,
+				name: 'Test',
+				message: ('Found ' + event.id)
+			})
+		}
     })
         
     mod.hook('S_DESPAWN_COLLECTION', 2, (event) => {
@@ -49,7 +57,7 @@ module.exports = function GatheringMarkers(mod) {
 
 	function configInit() {
         if (config) {
-            ({enabled,markenabled,messager,alerts,Item_ID,whiteList,markList} = config)
+            ({enabled,markenabled,messager,alerts,notices,Item_ID,whiteList,markList} = config)
         } else {
             mod.command.message("Error: Unable to load config.json - Using default values for now");
         }
@@ -107,6 +115,10 @@ module.exports = function GatheringMarkers(mod) {
 			markenabled = !markenabled;
 			mod.command.message(markenabled ? 'Item Markers enabled' : 'Item Markers disabled');
             return;
+		} else if (['notice', 'notices'].includes(p1)) {
+			notices = !notices;
+			mod.command.message(notices ? 'Notice messages enabled' : 'Notice messages disabled');
+			return;
         } else {
             mod.command.message(p1 +' is an invalid argument');
             return;

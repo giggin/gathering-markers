@@ -3,6 +3,7 @@
     "markenabled": true,
     "messager": true,
     "alerts": true,
+	"notices": true,
     "Item_ID": 88704,
     "whiteList": [301,601],
     "markList": [301,601]
